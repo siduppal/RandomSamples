@@ -1,0 +1,58 @@
+{
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.3",
+    "version": "1.0.1",
+    "id": "c35ccdff-52ee-4566-b2aa-c8e02629d6bb",
+    "packageName": "com.bot.groupy",
+    "developer": {
+        "name": "Sid",
+        "websiteUrl": "https://microsoft.com",
+        "privacyUrl": "https://microsoft.com",
+        "termsOfUseUrl": "https://microsoft.com"
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "name": {
+        "short": "Groupy",
+        "full": "Groupy bot"
+    },
+    "description": {
+        "short": "Bot to test group chats",
+        "full": "Ridiculously simple bot to test group chats"
+    },
+    "accentColor": "#FFFFFF",
+    "bots": [
+      {
+        "botId": "a40d71f1-1580-4796-9dd8-9055465bea7d",
+        "scopes": [
+          "team",
+          "personal",
+          "groupchat"
+        ],
+        "commandLists": [
+          {
+            "scopes": [
+              "team",
+              "personal",
+              "groupchat"
+            ],
+            "commands": [
+              {
+                "title": "/getmembers",
+                "description": "get members in this conversation"
+              }
+            ]
+          }
+        ],
+        "supportsFiles": false,
+        "isNotificationOnly": false
+      }
+    ],
+    "permissions": [
+        "identity",
+        "messageTeamMembers"
+    ],
+    "validDomains": []
+}

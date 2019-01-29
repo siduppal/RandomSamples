@@ -4,6 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 
@@ -68,7 +69,7 @@ namespace TeamsTestBotChats
 
                 // Bump the turn count for this conversation.
                 state.TurnCount++;
-
+                
                 // Set the property using the accessor.
                 await _accessors.CounterState.SetAsync(turnContext, state);
 
@@ -78,6 +79,25 @@ namespace TeamsTestBotChats
                 // Echo back to the user whatever they typed.
                 var responseMessage = $"Turn {state.TurnCount}: You sent '{turnContext.Activity.Text}'\n";
                 await turnContext.SendActivityAsync(responseMessage);
+
+                var activityText = turnContext.Activity.Text;
+
+                if (activityText.Contains("getmembers", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    var botFrameworkAdapter = turnContext.Adapter as BotFrameworkAdapter;
+                    var members = await botFrameworkAdapter.GetConversationMembersAsync(turnContext, cancellationToken);
+
+                    var detectedMemberNames = new string[members.Count];
+                    var i = 0;
+
+                    foreach (var m in members)
+                    {
+                        detectedMemberNames[i++] = turnContext.TurnState.Get<ITeamsContext>().AsTeamsChannelAccount(m).UserPrincipalName;
+                    }
+
+                    await turnContext.SendActivityAsync($"Hello 👋, {string.Join(",", detectedMemberNames)}");
+                }
+
             }
             else
             {
